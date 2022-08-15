@@ -10,9 +10,9 @@ This is the official site for the paper "Multiclass Classification with Fuzzy-fe
 This paper has been accepted by IEEE-TCYB.
 
 # Software version
-PyTorch 1.9.0. Python version is 3.9. CUDA version is 11.2.
+PyTorch 1.9.0. Python version is 3.9.7. CUDA version is 11.2.
 
-These python files require some basic scientific computing python packages, e.g., numpy. I recommend users to install python via Anaconda (python 3.9), which can be downloaded from https://www.anaconda.com/distribution/#download-section . If you have installed Anaconda, then you do not need to worry about these basic packages.
+These python files require some basic scientific computing python packages, e.g., numpy. I recommend users to install python via Anaconda (python 3.9.7), which can be downloaded from https://www.anaconda.com/distribution/#download-section . If you have installed Anaconda, then you do not need to worry about these basic packages.
 
 After you install anaconda and PyTorch, you can run codes successfully. Good luck!
 
