@@ -2,7 +2,7 @@
 """
 Created on Fri Jan 21 08:58:00 2022
 
-@author: 14025959_admin
+@author: guangzhi
 """
 import torch
 import time
@@ -21,11 +21,8 @@ import numpy as np
 import random
 import torch.nn as nn
 import numpy as np
-import sys
-sys.path.append("..")
 
 from sklearn import svm
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -56,7 +53,7 @@ loss = nn.CrossEntropyLoss()
 np.random.seed(1234)
 random.seed(1234)
 
-#london
+# london
 weatherlabel0 = pd.read_excel('London2020.xls', usecols=[6])
 weatherfeature0 = pd.read_excel('London2020.xls', usecols=[1, 2, 3, 4, 5])
 weatherfeature0 = np.array(weatherfeature0)
@@ -88,7 +85,7 @@ weatherfeature_M = np.zeros([weatherfeature.shape[0], 5])
 for i in range(weatherfeature_M.shape[1]):
     weatherfeature_M[:, i] = (weatherfeature[:, 2 * i] + weatherfeature[:, 2 * i + 1]) / 2
 
-#Meanlogistic
+# Meanlogistic
 Tmax = 20
 T1 = 1
 C = np.append(np.arange(0.1,1,0.1), np.arange(1,101,1))
@@ -108,7 +105,7 @@ for i in range(Tmax):
     clfbest = LogisticRegression(penalty='l2', C=c_bestlog, random_state=0, multi_class='multinomial').fit(lon_train, y_train)
     Scorelog0[i] = clfbest.score(lon_test, y_test)
 
-#MeanSVM
+# MeanSVM
 C = np.append(np.arange(0.1,1,0.1), np.arange(1,101,1))
 ScoreMSVM = np.zeros(Tmax)
 for i in range(Tmax):
@@ -146,7 +143,7 @@ for i in range(Tmax):
     ScoreMSVM[i] = np.max((s0,s1,s2))
 
 
-#MeanCART
+# MeanCART
 C =np.arange(1,11,1)
 Scoretree0 = np.zeros(Tmax)
 for i in range(Tmax):
@@ -164,7 +161,7 @@ for i in range(Tmax):
     clfbest = DecisionTreeClassifier(min_samples_leaf=c_besttree.astype(np.int64), max_depth=10, random_state=0).fit(lon_train, y_train)
     Scoretree0[i] = clfbest.score(lon_test, y_test)
 
-#MeanRanF
+# MeanRanF
 C =np.arange(1,11,1)
 Tr = np.arange(10,210,10)
 Scoreran0 = np.zeros(Tmax)
@@ -185,7 +182,7 @@ for i in range(Tmax):
     clfbest = RandomForestClassifier(n_estimators=tr_bestran.astype(np.int64), min_samples_leaf=c_bestran.astype(np.int64), random_state=0).fit(lon_train, y_train)
     Scoreran0[i] = clfbest.score(lon_test, y_test)
 
-#DFMLP
+# DFMLP
 batch_size = 500
 
 hidder = 100
@@ -216,7 +213,6 @@ for i in range(Tmax):
                     optimizer = torch.optim.Adam(params=net.parameters(), lr=LR[j], betas=(0.9, 0.999), eps=1e-08)
                     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
                     train_Acc, test_Acc = train_ch(net, train_iter, vali_iter, loss, batch_size, optimizer, scheduler, device, n_epoch[k])
-                    # vali_Acc[jj] = np.max(test_Acc)
                     vali_Acc[jj] = test_Acc[-1]
                 if vali_best < np.mean(vali_Acc):
                     vali_best = np.mean(vali_Acc)
@@ -231,10 +227,9 @@ for i in range(Tmax):
     optimizer = torch.optim.Adam(params = net.parameters(), lr=lr_best, betas=(0.9, 0.999), eps=1e-08)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
     _ , test_acc = train_ch(net, train_iter, test_iter, loss, batch_size, optimizer, scheduler, device, epoch_best)
-    # Scoredfmlp[i] = np.max(test_acc)
     Scoredfmlp[i] = test_acc[-1]
 
-#Fig.5(e)
+# Fig.5(e)
 # weatherfeature_df = DF_interval(weatherfeature, beta_best, feature_number)
 #
 # for i in range(Tmax):
@@ -271,9 +266,8 @@ for i in range(Tmax):
 # plt.savefig('DFMLP_lon.pdf', bbox_inches='tight')
 # plt.show()
 
-#DFSVM
+# DFSVM
 
-Start = time.time()
 T1 = 1
 C = np.append(np.arange(0.1,1,0.1), np.arange(1,101,1))
 Scoredfsvm = np.zeros(Tmax)
@@ -319,9 +313,7 @@ for i in range(Tmax):
     Scoredfsvm[i] = np.max((s0, s1, s2))
 
 
-#MeanMLP
-
-Tmax = 20
+# MeanMLP
 T1  = 10
 LR = np.array([0.0001, 0.001, 0.01, 0.1])
 n_epoch = np.array([100,200,500,1000,1500])
@@ -340,7 +332,6 @@ for i in range(Tmax):
                 optimizer = torch.optim.Adam(params=net.parameters(), lr=LR[j], betas=(0.9, 0.999), eps=1e-08)
                 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
                 train_Acc, test_Acc = train_ch(net, train_iter, vali_iter, loss, batch_size, optimizer, scheduler, device, n_epoch[k])
-                # vali_Acc[jj] = np.max(test_Acc)
                 vali_Acc[jj] = test_Acc[-1]
             if vali_best < np.mean(vali_Acc):
                 vali_best = np.mean(vali_Acc)
@@ -351,7 +342,6 @@ for i in range(Tmax):
     optimizer = torch.optim.Adam(params=net.parameters(), lr=lr_best, betas=(0.9, 0.999), eps=1e-08)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
     train_Acc0, test_Acc0 = train_ch(net, train_iter, test_iter, loss, batch_size, optimizer, scheduler, device, epoch_best)
-    # Scoremmlp[i] = np.max(test_Acc0)
     Scoremmlp[i] = test_Acc0[-1]
 
 
