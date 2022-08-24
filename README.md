@@ -16,7 +16,33 @@ These python files require some basic scientific computing python packages, e.g.
 
 After you install anaconda and PyTorch, you can run codes successfully. Good luck!
 
+# Data download
+You can download the file datasets.zip to get all datasets used in this paper.
+
 # Code
+You can run 
+```
+python main_sys.py 
+```
+--> get results on the synthetic dataset.
+
+You can run 
+```
+python main_per.py 
+```
+--> get results on the perceptions experiment dataset.
+
+You can run 
+```
+python main_letter.py 
+```
+--> get results on the letter recognition dataset.
+
+You can run 
+```
+python main_wealon.py 
+```
+--> get results on the London weather dataset.
 updating!!
 
 # Citation
