@@ -2,7 +2,7 @@
 """
 Created on Fri Jan 21 08:58:00 2022
 
-@author: 14025959_admin
+@author: guangzhi
 """
 import torch
 import time
@@ -51,9 +51,9 @@ loss = nn.CrossEntropyLoss()
 np.random.seed(123)
 random.seed(123)
 
-#sys data
+# sys data
 
-#data generate
+# data generate
 num_inputs = 20
 num_labels = 5
 sys_examples = 2000
@@ -69,7 +69,7 @@ sys_features02 = sys_features+bais3
 sys_featuresdf = DF_fuzzy(sys_features0, sys_features01, sys_features02)
 sys_featuresM = sys_features0/2 + (sys_features01 + sys_features02)/4
 
-#Meanlogistic
+# Meanlogistic
 Start = time.time()
 Tmax = 20
 T1 = 1
@@ -134,7 +134,7 @@ for i in range(Tmax):
 
 timeMeanSVM = time.time() - Start
 
-#MeanCART
+# MeanCART
 Start = time.time()
 
 C =np.arange(1,11,1)
@@ -156,7 +156,7 @@ for i in range(Tmax):
 
 timeMeanCART = time.time() - Start
 
-#MeanRanF
+# MeanRanF
 Start = time.time()
 
 C =np.arange(1,11,1)
@@ -181,7 +181,7 @@ for i in range(Tmax):
 
 timeMeanRanF = time.time() - Start
 
-#DFMLP
+# DFMLP
 Start = time.time()
 
 hidder = 150
@@ -208,7 +208,6 @@ for i in range(Tmax):
                 optimizer = torch.optim.Adam(params=net.parameters(), lr=LR[j], betas=(0.9, 0.999), eps=1e-08)
                 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
                 train_Acc, test_Acc = train_ch(net, train_iter, vali_iter, loss, batch_size, optimizer, scheduler, device, n_epoch[k])
-                # vali_Acc[jj] = np.max(test_Acc)
                 vali_Acc[jj] = test_Acc[-1]
             if vali_best < np.mean(vali_Acc):
                 vali_best = np.mean(vali_Acc)
@@ -219,12 +218,11 @@ for i in range(Tmax):
     optimizer = torch.optim.Adam(params = net.parameters(), lr=lr_best, betas=(0.9, 0.999), eps=1e-08)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
     _ , test_acc = train_ch(net, train_iter, test_iter, loss, batch_size, optimizer, scheduler, device, epoch_best)
-    # Scoredfmlp[i] = np.max(test_acc)
     Scoredfmlp[i] = test_acc[-1]
 
 timeDFMLP = time.time() - Start
 
-#Fig.3
+# Fig.3
 # for i in range(Tmax):
 #     sys_train, sys_vali, sys_test, y_train, y_vali, y_test = Data_split(sys_featuresdf, sys_labels, 0.2, 0.25, i)
 #     train_iter, vali_iter, test_iter = Data_split_torch(sys_train, sys_vali, sys_test, y_train, y_vali, y_test, batch_size)
@@ -258,7 +256,7 @@ timeDFMLP = time.time() - Start
 # plt.savefig('DFMLP_sys.pdf', bbox_inches='tight')
 # plt.show()
 #
-#DFSVM
+# DFSVM
 
 Start = time.time()
 T1 = 1
@@ -300,7 +298,7 @@ for i in range(Tmax):
 
 timeDFSVM = time.time() - Start
 
-#MeanMLP
+# MeanMLP
 Start = time.time()
 T1 = 10
 LR = np.array([0.0001, 0.001, 0.01, 0.1])
@@ -320,7 +318,6 @@ for i in range(Tmax):
                 optimizer = torch.optim.Adam(params=net.parameters(), lr=LR[j], betas=(0.9, 0.999), eps=1e-08)
                 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
                 train_Acc, test_Acc = train_ch(net, train_iter, vali_iter, loss, batch_size, optimizer, scheduler, device, n_epoch[k])
-                # vali_Acc[jj] = np.max(test_Acc)
                 vali_Acc[jj] = test_Acc[-1]
             if vali_best < np.mean(vali_Acc):
                 vali_best = np.mean(vali_Acc)
@@ -331,7 +328,6 @@ for i in range(Tmax):
     optimizer = torch.optim.Adam(params=net.parameters(), lr=lr_best, betas=(0.9, 0.999), eps=1e-08)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
     train_Acc0, test_Acc0 = train_ch(net, train_iter, test_iter, loss, batch_size, optimizer, scheduler, device, epoch_best)
-    # Scoremmlp[i] = np.max(test_Acc0)
     Scoremmlp[i] = test_Acc0[-1]
 
 timeMMLP= time.time() - Start
