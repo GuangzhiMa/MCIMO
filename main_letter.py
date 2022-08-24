@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jan 21 08:58:00 2022
-
-@author: 14025959_admin
-"""
 import torch
 import time
 from torch import nn, optim
@@ -21,11 +15,8 @@ import numpy as np
 import random
 import torch.nn as nn
 import numpy as np
-import sys
-sys.path.append("..")
 
 from sklearn import svm
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -304,7 +295,6 @@ for i in range(Tmax):
                 optimizer = torch.optim.Adam(params=net.parameters(), lr=LR[j], betas=(0.9, 0.999), eps=1e-08)
                 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
                 train_Acc, test_Acc = train_ch(net, train_iter, vali_iter, loss, batch_size, optimizer, scheduler, device, n_epoch[k])
-                # vali_Acc[jj] = np.max(test_Acc)
                 vali_Acc[jj] = test_Acc[-1]
             if vali_best < np.mean(vali_Acc):
                 vali_best = np.mean(vali_Acc)
@@ -315,7 +305,6 @@ for i in range(Tmax):
     optimizer = torch.optim.Adam(params=net.parameters(), lr=lr_best, betas=(0.9, 0.999), eps=1e-08)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
     train_Acc0, test_Acc0 = train_ch(net, train_iter, test_iter, loss, batch_size, optimizer, scheduler, device, epoch_best)
-    # Scoremmlp[i] = np.max(test_Acc0)
     Scoremmlp[i] = test_Acc0[-1]
 
 
