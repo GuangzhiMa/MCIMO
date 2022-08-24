@@ -11,8 +11,7 @@ import numpy as np
 import random
 import torch.nn as nn
 import numpy as np
-import sys
-sys.path.append("..") 
+
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import balanced_accuracy_score
 from sklearn.model_selection import train_test_split
@@ -184,25 +183,18 @@ def train_ch02(train_Acc0, test_Acc0, train_Auc0, test_Auc0, net, train_iter, te
               % (epoch + 1, train_l_sum / batch_count, balanced_accuracy_score(y_tru0, y_pre0), test_acc, time.time() - start))
     scheduler.step()
 
-# def softmax(X):
-#     X_exp = X.exp()
-#     partition = X_exp.sum(dim=1, keepdim=True)
-#     return X_exp / partition
-
 def evaluate_accuracy(data_iter, net, device=None):
     if device is None and isinstance(net, torch.nn.Module):
-        # 如果没指定device就使用net的device
         device = list(net.parameters())[0].device
     acc_sum, n = 0.0, 0
     with torch.no_grad():
         for X, y in data_iter:
             if isinstance(net, torch.nn.Module):
-                net.eval() # 评估模式, 这会关闭dropout
+                net.eval()
                 acc_sum += (net(X.to(device)).argmax(dim=1) == y.to(device)).float().sum().cpu().item()
-                net.train() # 改回训练模式
-            else: # 自定义的模型, 3.13节之后不会用到, 不考虑GPU
-                if('is_training' in net.__code__.co_varnames): # 如果有is_training这个参数
-                    # 将is_training设置成False
+                net.train() 
+            else: 
+                if('is_training' in net.__code__.co_varnames): 
                     acc_sum += (net(X, is_training=False).argmax(dim=1) == y).float().sum().item()
                 else:
                     acc_sum += (net(X).argmax(dim=1) == y).float().sum().item()
