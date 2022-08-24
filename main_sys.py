@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jan 21 08:58:00 2022
-
-@author: 14025959_admin
-"""
 import torch
 import time
 from torch import nn, optim
@@ -21,11 +15,8 @@ import numpy as np
 import random
 import torch.nn as nn
 import numpy as np
-import sys
-sys.path.append("..")
 
 from sklearn import svm
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -54,9 +45,9 @@ loss = nn.CrossEntropyLoss()
 np.random.seed(123)
 random.seed(123)
 
-#sys data
+# sys data
 
-#data generate
+# data generate
 num_inputs = 20
 num_labels = 5
 sys_examples = 2000
@@ -72,7 +63,7 @@ sys_features02 = sys_features+bais3
 sys_featuresdf = DF_fuzzy(sys_features0, sys_features01, sys_features02)
 sys_featuresM = sys_features0/2 + (sys_features01 + sys_features02)/4
 
-#Meanlogistic
+# Meanlogistic
 Start = time.time()
 Tmax = 20
 T1 = 1
