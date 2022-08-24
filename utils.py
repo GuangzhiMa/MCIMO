@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jan 21 08:58:00 2022
+
+@author: guangzhi
+"""
 import torch
 import time
 
@@ -16,7 +22,7 @@ from sklearn.metrics import balanced_accuracy_score
 from sklearn.model_selection import train_test_split
 
 
-#blanced accuracy
+# blanced accuracy
 def balanced_accuracy(data_iter, net, device=None):
     if device is None and isinstance(net, torch.nn.Module):
         device = list(net.parameters())[0].device
