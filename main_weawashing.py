@@ -2,7 +2,7 @@
 """
 Created on Fri Jan 21 08:58:00 2022
 
-@author: 14025959_admin
+@author: guangzhi
 """
 import torch
 import time
