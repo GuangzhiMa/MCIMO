@@ -34,6 +34,12 @@ python main_per.py
 
 You can run 
 ```
+python main_mush.py 
+```
+--> get results on the mushroom dataset.
+
+You can run 
+```
 python main_letter.py 
 ```
 --> get results on the letter recognition dataset.
@@ -44,7 +50,12 @@ python main_wealon.py
 ```
 --> get results on the London weather dataset.
 
-updating!!
+You can run 
+```
+python main_weawashing.py 
+```
+--> get results on the Washington weather dataset.
+
 
 # Citation
 If you are using this code for your own researching, please consider citing
