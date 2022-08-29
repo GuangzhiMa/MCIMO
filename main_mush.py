@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jan 21 08:58:00 2022
+
+@author: guangzhi
+"""
 import torch
 import time
 from torch import nn, optim
@@ -75,7 +81,7 @@ for i in range(5):
 batch_size = 50
 
 # Meanlogistic
-Tmax = 1
+Tmax = 20
 T1 = 1
 C = np.append(np.arange(0.1,1,0.1), np.arange(1,101,1))
 Scorelog = np.zeros(Tmax)
